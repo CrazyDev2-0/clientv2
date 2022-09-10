@@ -76,17 +76,21 @@ const Map = () => {
   const [quant, setQuant] = useState(1);
   const [type, setType] = useState("");
   const payapi = async () =>  {
-    const res = await axios({
-      method: 'post',
-      url: `${url}order`,
-      data:{
-        "quantity" : quant,
-        "machine_id" : mach.code,        
-        "product" : type
-      }
-    });
-    const redlink = res.data.payload.link;
-    window.location.href = redlink;
+    try {
+      const res = await axios({
+        method: 'post',
+        url: `${url}order`,
+        data:{
+          "quantity" : quant,
+          "machine_id" : mach.code,        
+          "product" : type
+        }
+      });
+      const redlink = res.data.payload.link;
+      window.location.href = redlink;
+    } catch (error) {
+      alert(error.response.data.message);
+    }
   }  
   
   return (
